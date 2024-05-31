@@ -1,0 +1,12 @@
+services:
+  make:
+    build:
+      dockerfile_inline: |
+        FROM alpine:3.22.0
+        RUN apk add --no-cache git nodejs npm
+        WORKDIR /app
+        RUN npm i rollup terser
+        WORKDIR commit
+        CMD node main/make/main.mjs
+    volumes:
+      - .:/app/commit
