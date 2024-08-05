@@ -1,6 +1,12 @@
 import Concept from             '../Concept/main.mjs'
 import NodeInstanceConcept from '../NodeInstanceConcept/main.mjs'
 import TextConcept from         '../TextConcept/main.mjs'
+let insertArrayAfter=(a,b)=>{
+    for(let p of a){
+        b.parentNode.insertBefore(p,b.nextSibling)
+        b=p
+    }
+}
 let FragmentConcept=class extends Concept{
     constructor(prop={},...child){
         super()
@@ -35,12 +41,6 @@ let FragmentConcept=class extends Concept{
                     else
                         posNode.push({concept:d,node:res})
                     n=res.at(-1)
-                }
-            }
-            let insertArrayAfter=(a,b)=>{
-                for(let p of a){
-                    b.parentNode.insertBefore(p,b.nextSibling)
-                    b=p
                 }
             }
             let mount={}
