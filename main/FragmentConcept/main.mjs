@@ -30,8 +30,8 @@ let FragmentConcept=class extends Concept{
                 let n=m
                 for(let d of c.c){
                     let res=d.getNode(n.nextSibling)
-                    if('key'in d.p)
-                        keyNode[d.p.key]={concept:d,node:res}
+                    if('_key'in d.p)
+                        keyNode[d.p._key]={concept:d,node:res}
                     else
                         posNode.push({concept:d,node:res})
                     n=res.at(-1)
@@ -47,10 +47,10 @@ let FragmentConcept=class extends Concept{
             {
                 let pos=0
                 for(let[i,d]of this.c.entries())
-                    if('key'in d.p){
-                        if(d.p.key in keyNode){
-                            mount[i]=keyNode[d.p.key]
-                            delete keyNode[d.p.key]
+                    if('_key'in d.p){
+                        if(d.p._key in keyNode){
+                            mount[i]=keyNode[d.p._key]
+                            delete keyNode[d.p._key]
                         }
                     }else{
                         if(pos in posNode){

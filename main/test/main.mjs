@@ -151,15 +151,15 @@ console.log(
         let
             m=document.createElement('div'),
             mount=new Mount(n=>m.appendChild(n),div({},
-                div({key:0}),
-                button({key:1}),
+                div({_key:0}),
+                button({_key:1}),
             )),
             oldDiv=m.childNodes[1],
             oldButton=m.childNodes[2]
         mount.adv(div(
             {},
-            button({key:1}),
-            div({key:0}),
+            button({_key:1}),
+            div({_key:0}),
         ))
         yield m.childNodes[1]==oldButton&&
             m.childNodes[2]==oldDiv
@@ -171,18 +171,18 @@ console.log(
         let
             m=document.createElement('div'),
             mount=new Mount(n=>m.appendChild(n),div({},
-                div({key:0}),
-                div({key:1}),
-                div({key:2}),
+                div({_key:0}),
+                div({_key:1}),
+                div({_key:2}),
             ),)
         let div1=m.firstChild.childNodes[2],div2=m.firstChild.childNodes[3]
         mount.adv(div({},
-            div({key:1}),
-            div({key:2}),
+            div({_key:1}),
+            div({_key:2}),
         ))
         yield m.firstChild.childNodes[1]==div1&&m.firstChild.childNodes[2]==div2
         mount.adv(div({},
-            div({key:2}),
+            div({_key:2}),
         ))
     }()].every(a=>a),
     'Remove the first node of a fragment.',
@@ -192,9 +192,9 @@ console.log(
         let
             container=document.createElement('a'),
             mount=new Mount(n=>container.appendChild(n),$fragment({},
-                a({key:0}),
-                a({key:1}),
-                a({key:2}),
+                a({_key:0}),
+                a({_key:1}),
+                a({_key:2}),
             ),)
         yield container.childNodes.length==4&&
             container.childNodes[1].tagName=='A'&&
@@ -223,16 +223,16 @@ console.log(
             m=document.createElement('div'),
             mount=new Mount(n=>m.appendChild(n),div({},
                 [
-                    div({key:0}),
-                    div({key:1}),
-                    div({key:2}),
+                    div({_key:0}),
+                    div({_key:1}),
+                    div({_key:2}),
                 ],
             ),)
         let div1=m.firstChild.childNodes[3],div2=m.firstChild.childNodes[4]
         mount.adv(div({},
             [
-                div({key:1}),
-                div({key:2}),
+                div({_key:1}),
+                div({_key:2}),
             ],
         ))
         yield m.firstChild.childNodes[2]==div1&&m.firstChild.childNodes[3]==div2
@@ -288,11 +288,11 @@ console.log(
         let
             container=document.createElement('a'),
             mount=new Mount(n=>container.appendChild(n),$fragment({},
-                a({key:'a'}),
+                a({_key:'a'}),
             ),)
         yield container.childNodes.length==2&&container.childNodes[1].tagName=='A'
         mount.adv($fragment({},
-            a({key:'b'}),
+            a({_key:'b'}),
         ))
         yield container.childNodes.length==2&&container.childNodes[1].tagName=='A'
     }()].every(a=>a),
@@ -301,18 +301,18 @@ console.log(
 if(0){
     let g=function*(){
         let mount=new Mount(n=>document.body.appendChild(n),div({},
-            div({key:0}),
-            div({key:1}),
-            div({key:2}),
+            div({_key:0}),
+            div({_key:1}),
+            div({_key:2}),
         ),)
         yield
         mount.adv(div({},
-            div({key:1}),
-            div({key:2}),
+            div({_key:1}),
+            div({_key:2}),
         ))
         yield
         mount.adv(div({},
-            div({key:2}),
+            div({_key:2}),
         ))
     }()
     new Mount(n=>document.body.appendChild(n),

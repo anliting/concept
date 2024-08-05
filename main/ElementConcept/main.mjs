@@ -22,9 +22,8 @@ let ElementConcept=class extends NodeConcept{
             return super.sub(c)
         return n=>{
             let specialProp=new Set([
-                'key',
+                '_key',
                 'style','$style',
-                '$textContent',
             ])
             if(!arrayStrictEqual(
                 [c.p.style,c.p.$style],
@@ -49,11 +48,6 @@ let ElementConcept=class extends NodeConcept{
                                     n.style[s]=this.p.$style[s]
                         }else
                             n.style.removeProperty(s)
-            if(!arrayStrictEqual(
-                [c.p.$textContent],
-                [this.p.$textContent],
-            ))
-                n.textContent=this.p.$textContent||''
             let s=new Set(Object.keys(this.p))
                 .union(new Set(Object.keys(c.p)))
                 .difference(specialProp)
