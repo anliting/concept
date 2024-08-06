@@ -15,6 +15,8 @@ let ElementConcept=class extends NodeConcept{
         return[a]
     }
     sub(c){
+        if(c==this)
+            return n=>[n,n]
         if(!(
             c instanceof ElementConcept&&
             this.t==c.t
