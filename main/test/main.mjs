@@ -1,4 +1,4 @@
-import{$tn,Mount,dom,$fragment}from'concept'
+import{$fragment,$tn,Mount,dom}from'concept'
 let{a,button,div}=dom
 console.log(
     [...function*(){
@@ -273,7 +273,7 @@ console.log(
             a=document.createElement('a'),
             b=document.createElement('a'),
             mount=new Mount(n=>a.appendChild(n),$fragment({},
-                $fragment({},b),
+                [b],
             ),)
         yield a.childNodes.length==4&&a.childNodes[3]==b
         mount.adv($fragment({},
