@@ -6,10 +6,10 @@ let NodeInstanceConcept=class extends Concept{
         this.p={}
     }
     getNode(n){
-        return[n]
+        return n.nextSibling==this.n?[n,n.nextSibling]:[n]
     }
     make(){
-        return[this.n]
+        return[new Text,this.n]
     }
     sub(c){
         if(!(

@@ -247,7 +247,7 @@ console.log(
             mount=new Mount(n=>a.appendChild(n),$fragment({},
                 b,
             ),)
-        yield a.childNodes.length==2&&a.childNodes[1]==b
+        yield a.childNodes.length==3&&a.childNodes[2]==b
     }()].every(a=>a),
     'Feature: Treat Node in fragment as NodeInstanceConcept.',
 )
@@ -259,11 +259,11 @@ console.log(
             mount=new Mount(n=>a.appendChild(n),$fragment({},
                 b
             ),)
-        yield a.childNodes.length==2&&a.childNodes[1]==b
+        yield a.childNodes.length==3&&a.childNodes[2]==b
         mount.adv($fragment({},
             b
         ))
-        yield a.childNodes.length==2&&a.childNodes[1]==b
+        yield a.childNodes.length==3&&a.childNodes[2]==b
     }()].every(a=>a),
     'Correctness: Change NodeInstanceConcept to itself. If it is treated as two different nodes, and it is inserted and then removed, it is likely to fail this test.',
 )
@@ -275,11 +275,11 @@ console.log(
             mount=new Mount(n=>a.appendChild(n),$fragment({},
                 $fragment({},b),
             ),)
-        yield a.childNodes.length==3&&a.childNodes[2]==b
+        yield a.childNodes.length==4&&a.childNodes[3]==b
         mount.adv($fragment({},
             b,
         ))
-        yield a.childNodes.length==2&&a.childNodes[1]==b
+        yield a.childNodes.length==3&&a.childNodes[2]==b
     }()].every(a=>a),
     'Correctness: Change Fragment of NodeInstanceConcept to NodeInstanceConcept itself.',
 )
@@ -296,7 +296,27 @@ console.log(
         ))
         yield container.childNodes.length==2&&container.childNodes[1].tagName=='A'
     }()].every(a=>a),
-    'Correctness: ',
+    'Correctness: Special case 0.',
+)
+console.log(
+    [...function*(){
+        let
+            container=document.createElement('a'),
+            b=document.createElement('a'),
+            mount=new Mount(n=>container.appendChild(n),$fragment({},
+                a({}),
+                b,
+            ),)
+        yield container.childNodes.length==4&&container.childNodes[3]==b
+        mount.adv($fragment({},
+            a({},b),
+            '',
+        ))
+        yield container.childNodes.length==3&&
+            container.childNodes[1].childNodes.length==3&&
+            container.childNodes[1].childNodes[2]==b
+    }()].every(a=>a),
+    'Correctness: Special case 1.',
 )
 if(0){
     let g=function*(){
