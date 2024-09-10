@@ -6,9 +6,9 @@ let{a,b,button,div,input}=dom
 console.log(
     [...function*(){
         let root=new Root
-        root.adv($tn({},'a'))
+        root.render($tn({},'a'))
         yield root.node.childNodes[0].wholeText=='a'
-        root.adv($tn({},'b'))
+        root.render($tn({},'b'))
         yield root.node.childNodes[0].wholeText=='b'
     }()].every(a=>a),
     'Change text to text.',
@@ -17,7 +17,7 @@ console.log(
     [...function*(){
         let root=new Root($tn({},'a'))
         yield root.node.childNodes[0].wholeText=='a'
-        root.adv(div())
+        root.render(div())
         yield root.node.childNodes[0].tagName=='DIV'
     }()].every(a=>a),
     'Change text to DIV element.',
@@ -27,7 +27,7 @@ console.log(
         let root=new Root(a())
         yield root.node.childNodes.length==1&&
             root.node.childNodes[0].tagName=='A'
-        root.adv($fragment())
+        root.render($fragment())
         yield root.node.childNodes.length==1&&
             root.node.childNodes[0]instanceof Text
     }()].every(a=>a),
@@ -39,7 +39,7 @@ console.log(
         yield root.node.childNodes.length==2&&
             root.node.childNodes[0]instanceof Text&&
             root.node.childNodes[1].tagName=='DIV'
-        root.adv(div())
+        root.render(div())
         yield root.node.childNodes.length==1&&
             root.node.childNodes[0].tagName=='DIV'
     }()].every(a=>a),
@@ -49,7 +49,7 @@ console.log(
     [...function*(){
         let root=new Root(div())
         yield root.node.childNodes[0].tagName=='DIV'
-        root.adv(div({
+        root.render(div({
             id:'a',
             class:'b',
             hidden:'',
@@ -65,7 +65,7 @@ console.log(
     [...function*(){
         let root=new Root(div())
         yield root.node.childNodes[0].tagName=='DIV'
-        root.adv(div({
+        root.render(div({
             style:'width:100px',
         }))
         yield root.node.childNodes[0].style.width=='100px'
@@ -76,7 +76,7 @@ console.log(
     [...function*(){
         let root=new Root(div())
         yield root.node.childNodes[0].tagName=='DIV'
-        root.adv(div({
+        root.render(div({
             $style:{
                 width:'200px',
             }
@@ -92,7 +92,7 @@ console.log(
             button(),
         ))
         yield root.node.childNodes[0].tagName=='DIV'
-        root.adv(div(
+        root.render(div(
             {},
             div({id:'a'}),
             button({id:'b'}),
@@ -110,7 +110,7 @@ console.log(
             div(),
         ))
         yield root.node.childNodes[0].tagName=='DIV'
-        root.adv(div(
+        root.render(div(
             {},
             div(),
             button(),
@@ -126,7 +126,7 @@ console.log(
         let
             root=new Root($tn({},'a'),),
             oldNode=root.node.childNodes[0]
-        root.adv($tn({},'a'))
+        root.render($tn({},'a'))
         yield oldNode==root.node.childNodes[0]
     }()].every(a=>a),
     'Text should remains the same if concept is not changed.',
@@ -140,7 +140,7 @@ console.log(
             )),
             oldDiv=root.node.childNodes[1],
             oldButton=root.node.childNodes[2]
-        root.adv(div(
+        root.render(div(
             {},
             button({_key:1}),
             div({_key:0}),
@@ -160,12 +160,12 @@ console.log(
             )),
             div1=root.node.firstChild.childNodes[2],
             div2=root.node.firstChild.childNodes[3]
-        root.adv(div({},
+        root.render(div({},
             div({_key:1}),
             div({_key:2}),
         ))
         yield root.node.firstChild.childNodes[1]==div1&&root.node.firstChild.childNodes[2]==div2
-        root.adv(div({},
+        root.render(div({},
             div({_key:2}),
         ))
     }()].every(a=>a),
@@ -182,7 +182,7 @@ console.log(
             root.node.childNodes[1].tagName=='A'&&
             root.node.childNodes[2].tagName=='A'&&
             root.node.childNodes[3].tagName=='A'
-        root.adv($fragment({}))
+        root.render($fragment({}))
         yield root.node.childNodes.length==1&&
             root.node.childNodes[0] instanceof Text
     }()].every(a=>a),
@@ -209,7 +209,7 @@ console.log(
             )),
             div1=root.node.firstChild.childNodes[3],
             div2=root.node.firstChild.childNodes[4]
-        root.adv(div({},
+        root.render(div({},
             [
                 div({_key:1}),
                 div({_key:2}),
@@ -252,7 +252,7 @@ console.log(
             ))
         yield root.node.childNodes.length==3&&
             root.node.childNodes[2]==b
-        root.adv($fragment({},
+        root.render($fragment({},
             b
         ))
         yield root.node.childNodes.length==3&&
@@ -269,7 +269,7 @@ console.log(
             ),)
         yield root.node.childNodes.length==4&&
             root.node.childNodes[3]==b
-        root.adv($fragment({},
+        root.render($fragment({},
             b,
         ))
         yield root.node.childNodes.length==3&&
@@ -284,10 +284,10 @@ console.log(
             useEffect(()=>()=>a=1,[])
             return $fragment({})
         })({}))
-        root.adv($fragment({}))
+        root.render($fragment({}))
         yield a
     }()].every(a=>a),
-    'Correctness: Effects of component should be cleared when it is advanced to fragment.',
+    'Correctness: Effects of component should be cleared when it is renderanced to fragment.',
 )
 console.log(
     [...function*(){
@@ -298,7 +298,7 @@ console.log(
                 return $fragment({})
             })({}),
         ))
-        root.adv($fragment({}))
+        root.render($fragment({}))
         yield!!a
     }()].every(a=>a),
     'Correctness: Effects of component should be cleared when it is removed from a fragment.',
@@ -312,7 +312,7 @@ console.log(
                 return $fragment({})
             })({}),
         ))
-        root.adv($tn({},''))
+        root.render($tn({},''))
         yield!!a
     }()].every(a=>a),
     'Correctness: Effects of component in fragment should be cleared when the fragment is removed.',
@@ -327,10 +327,10 @@ console.log(
                 return $fragment({})
             })({})
         })({}))
-        root.adv($fragment({}))
+        root.render($fragment({}))
         yield a==2
     }()].every(a=>a),
-    'Correctness: Effects of nested component should be cleared when it is advanced to fragment.',
+    'Correctness: Effects of nested component should be cleared when it is renderanced to fragment.',
 )
 console.log(
     [...function*(){
@@ -340,7 +340,7 @@ console.log(
             ),)
         yield root.node.childNodes.length==2&&
             root.node.childNodes[1].tagName=='A'
-        root.adv($fragment({},
+        root.render($fragment({},
             a({_key:'b'}),
         ))
         yield root.node.childNodes.length==2&&
@@ -358,7 +358,7 @@ console.log(
             ),)
         yield root.node.childNodes.length==4&&
             root.node.childNodes[3]==b
-        root.adv($fragment({},
+        root.render($fragment({},
             a({},b),
             '',
         ))
@@ -378,7 +378,7 @@ console.log(
             return a({})
         })
         let root=new Root(cmpA({propA:0}))
-        root.adv(cmpA({propA:1}))
+        root.render(cmpA({propA:1}))
         outerSetState()
         root.flush()
         yield outerPropA
@@ -416,7 +416,7 @@ if(0){
         let i=~~(n*Math.random())
         a[i]=!a[i]
         let s=performance.now()
-        root.adv()
+        root.render()
         amount+=performance.now()-s
     },1e1)
 }
@@ -450,13 +450,13 @@ if(0){
         let i=~~(n*Math.random())
         a[i]=!a[i]
         let s=performance.now()
-        blockRoot[i].adv()
+        blockRoot[i].render()
         amount+=performance.now()-s
     },1e1)
 }
 if(0){
     let root=new Root($fragment({},div({id:'a'}),div({id:'b'})))
-    root.adv($fragment({},div({id:'b'}),div({id:'a'})))
+    root.render($fragment({},div({id:'b'}),div({id:'a'})))
     document.body.appendChild(root.node)
     root.unmount()
     document.body.appendChild(root.node)
@@ -543,7 +543,7 @@ if(0){
         return $fragment({})
     })
     let root=new Root(c({a:1}))
-    root.adv(c({a:1}))
+    root.render(c({a:1}))
     console.log(a)
 }
 // effect should be run after sub-concept is rendered.
@@ -567,24 +567,24 @@ if(0){
         return a({})
     })
     let root=new Root(cmpA({propA:0}))
-    root.adv(cmpA({propA:1}))
+    root.render(cmpA({propA:1}))
     outerSetState()
     root.flush()
     console.log(!!outerPropA)
 }
 if(0){
     let root=new Root
-    root.adv(input({value:'a'}))
+    root.render(input({value:'a'}))
     root.node.firstChild.value='b'
-    root.adv(input({value:'c'}))
+    root.render(input({value:'c'}))
     root.flush()
     console.log(root.node.firstChild.value=='c')
 }
 if(0){
     let root=new Root
-    root.adv(input({type:'checkbox',checked:false}))
+    root.render(input({type:'checkbox',checked:false}))
     root.node.firstChild.checked=false
-    root.adv(input({type:'checkbox',checked:true}))
+    root.render(input({type:'checkbox',checked:true}))
     root.flush()
     console.log(root.node.firstChild.checked)
 }

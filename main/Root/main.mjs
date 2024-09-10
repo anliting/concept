@@ -5,7 +5,7 @@ export let Root=class{
     #commit
     #prove
     #queue=[]
-    adv(newConcept=this.concept){
+    render(newConcept=this.concept){
         withCommit(this.#commit,()=>{
             this.#prove=newConcept.sub(this.concept)(this.#prove)
             this.concept=newConcept
@@ -16,15 +16,15 @@ export let Root=class{
             a:()=>{
                 this.#afr=this.#afr||requestAnimationFrame(()=>{
                     this.#afr=0
-                    this.adv()
+                    this.render()
                 })
             },
-            s:()=>this.adv(),
+            s:()=>this.render(),
         }
         this.concept=new TextConcept({})
         this.#prove=this.concept.make(this)
         this.node.append(...this.#prove.node)
-        c&&this.adv(c)
+        c&&this.render(c)
     }
     flush(){
         withCommit(this.#commit,()=>{
