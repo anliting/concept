@@ -1,5 +1,4 @@
 import{arrayIs}from             '../base/main.mjs'
-import{useAsyncCommit}from      '../commit/main.mjs'
 let
     currentProve,
     currentMemoryBlock,
@@ -22,8 +21,7 @@ let
                     m.clean=0
                     m.concept.sub(m.concept)(m)
                 })
-            }],
-            asyncCommit=useAsyncCommit()
+            }]
         return useRef(a).current
     },
     withMemory=(m,f)=>{
