@@ -243,6 +243,41 @@ console.log(
     }()].every(a=>a),
     'Feature: Root.prototype.unmount.',
 )
+console.log(
+    [...function*(){
+        let a=0
+        let C=component(()=>{
+            a++
+            return $fragment({})
+        })
+        let root=new Root(C({a:1}))
+        root.render(C({a:1}))
+        yield a==1
+    }()].every(a=>a),
+    'Feature: Component is pure: If two components have the same function, property content, and children array, changing between them does nothing.',
+)
+console.log(
+    [...function*(){
+        let root=new Root
+        root.render(input({value:'a'}))
+        root.node.firstChild.value='b'
+        root.render(input({value:'c'}))
+        root.flush()
+        yield root.node.firstChild.value=='c'
+    }()].every(a=>a),
+    'Feature: input.value.',
+)
+console.log(
+    [...function*(){
+        let root=new Root
+        root.render(input({type:'checkbox',checked:false}))
+        root.node.firstChild.checked=false
+        root.render(input({type:'checkbox',checked:true}))
+        root.flush()
+        yield root.node.firstChild.checked
+    }()].every(a=>a),
+    'Feature: input.checked.',
+)
 0&&console.log(
     [...function*(){
         let
@@ -384,6 +419,21 @@ console.log(
         yield outerPropA
     }()].every(a=>a),
     'Correctness: Special case 2.',
+)
+console.log(
+    [...function*(){
+        let root=new Root(component(()=>{
+            let ref=useRef()
+            useEffect(()=>{
+                let root=new Root(div({}))
+                ref.current.appendChild(root.node)
+                return()=>{root.unmount()}
+            },[])
+            return div({_ref:ref})
+        })({}))
+        return root.node.firstChild.childNodes[1].tagName=='DIV'
+    }()].every(a=>a),
+    'Prove: Externally controlled fragment.',
 )
 if(0){
     let n=1000
@@ -562,46 +612,4 @@ if(0){
     outerSetState()
     root.flush()
     console.log(!!outerPropA)
-}
-// input.value
-if(0){
-    let root=new Root
-    root.render(input({value:'a'}))
-    root.node.firstChild.value='b'
-    root.render(input({value:'c'}))
-    root.flush()
-    console.log(root.node.firstChild.value=='c')
-}
-// input.checked
-if(0){
-    let root=new Root
-    root.render(input({type:'checkbox',checked:false}))
-    root.node.firstChild.checked=false
-    root.render(input({type:'checkbox',checked:true}))
-    root.flush()
-    console.log(root.node.firstChild.checked)
-}
-// externally controlled fragment
-if(0){
-    let root=new Root(component(()=>{
-        let ref=useRef()
-        useEffect(()=>{
-            let root=new Root(div({}))
-            ref.current.appendChild(root.node)
-            return()=>{root.unmount()}
-        },[])
-        return div({_ref:ref})
-    })({}))
-    console.log(root.node.firstChild.childNodes[1].tagName=='DIV')
-}
-// pure component
-if(0){
-    let a=0
-    let c=component(()=>{
-        a++
-        return $fragment({})
-    })
-    let root=new Root(c({a:1}))
-    root.render(c({a:1}))
-    console.log(a==1)
 }
