@@ -595,7 +595,7 @@ if(0){
     console.log(root.node.firstChild.childNodes[1].tagName=='DIV')
 }
 // pure component
-if(1){
+if(0){
     let a=0
     let c=component(()=>{
         a++
