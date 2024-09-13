@@ -1,5 +1,4 @@
 import Concept from             '../Concept/main.mjs'
-import NodeInstanceConcept from '../NodeInstanceConcept/main.mjs'
 import Prove from               '../Prove/main.mjs'
 import TextConcept from         '../TextConcept/main.mjs'
 let insertArrayAfter=(a,b)=>{
@@ -13,7 +12,6 @@ let FragmentConcept=class extends Concept{
         super(prop)
         this.c=child.map(a=>
             typeof a=='string'?new TextConcept({},a):
-            a instanceof Node?new NodeInstanceConcept(a):
             Symbol.iterator in a?new FragmentConcept({},a):a
         )
     }

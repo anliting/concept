@@ -220,7 +220,7 @@ console.log(
     }()].every(a=>a),
     'Feature: Treat non-string iterable item in fragment as fragment.',
 )
-console.log(
+0&&console.log(
     [...function*(){
         let
             b=new Text,
@@ -243,7 +243,7 @@ console.log(
     }()].every(a=>a),
     'Feature: Root.prototype.unmount.',
 )
-console.log(
+0&&console.log(
     [...function*(){
         let
             b=document.createElement('a'),
@@ -260,7 +260,7 @@ console.log(
     }()].every(a=>a),
     'Correctness: Change NodeInstanceConcept to itself. If it is treated as two different nodes, and it is inserted and then removed, it is likely to fail this test.',
 )
-console.log(
+0&&console.log(
     [...function*(){
         let
             b=document.createElement('a'),
@@ -348,7 +348,7 @@ console.log(
     }()].every(a=>a),
     'Correctness: Special case 0.',
 )
-console.log(
+0&&console.log(
     [...function*(){
         let
             b=document.createElement('a'),
