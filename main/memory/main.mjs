@@ -1,7 +1,7 @@
 import{arrayIs}from             '../base/main.mjs'
 import{useAsyncCommit}from      '../commit/main.mjs'
 let
-    currentMemory,
+    currentProve,
     currentMemoryBlock,
     useCallback=(cb,dep)=>{
         let cbDepRef=useRef([cb,dep])
@@ -9,16 +9,17 @@ let
             cbDepRef.current=[cb,dep]
         return cbDepRef.current[0]
     },
-    useRef=v=>currentMemoryBlock in currentMemory.ref?
-        currentMemory.ref[currentMemoryBlock++]
+    useRef=v=>currentMemoryBlock in currentProve.ref?
+        currentProve.ref[currentMemoryBlock++]
     :
-        (currentMemory.ref[currentMemoryBlock++]={current:v}),
+        (currentProve.ref[currentMemoryBlock++]={current:v}),
     useState=v=>{
         let
-            m=currentMemory,
+            m=currentProve,
             a=[v,v=>{
                 m.root.push(()=>{
                     a[0]=v
+                    m.clean=0
                     m.concept.sub(m.concept)(m)
                 })
             }],
@@ -27,14 +28,14 @@ let
     },
     withMemory=(m,f)=>{
         let
-            previousMemory=currentMemory,
+            previousMemory=currentProve,
             previousMemoryBlock=currentMemoryBlock
-        currentMemory=m
+        currentProve=m
         currentMemoryBlock=0
         try{
             return f()
         }finally{
-            currentMemory=previousMemory
+            currentProve=previousMemory
             currentMemoryBlock=previousMemoryBlock
         }
     }

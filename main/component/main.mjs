@@ -26,12 +26,13 @@ let ComponentConcept=class extends Concept{
             this.f==c.f
         ))
             return super.sub(c)
-        if(0)if(
-            objectContentIs(c.p,this.p)&&
-            arrayIs(c.c,this.c)
-        )
-            return p=>p
         return prove=>{
+            if(
+                objectContentIs(c.p,this.p)&&
+                arrayIs(c.c,this.c)&&
+                prove.clean
+            )
+                return prove
             let oldCon=prove.functionConcept,oldEff=prove.effect,effect=[]
             let concept=withEffect(effect,()=>
                 withMemory(prove,()=>this.f(this.p,...this.c))
@@ -48,6 +49,7 @@ let ComponentConcept=class extends Concept{
                 let e=effect[i]
                 e[0]=e[0]()
             })
+            prove.clean=1
             prove.concept=this
             prove.effect=effect
             prove.node=prove.child[0].node
