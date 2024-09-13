@@ -287,7 +287,7 @@ console.log(
         root.render($fragment({}))
         yield a
     }()].every(a=>a),
-    'Correctness: Effects of component should be cleared when it is renderanced to fragment.',
+    'Correctness: Effects of component should be cleared when it is changed to fragment.',
 )
 console.log(
     [...function*(){
@@ -330,7 +330,7 @@ console.log(
         root.render($fragment({}))
         yield a==2
     }()].every(a=>a),
-    'Correctness: Effects of nested component should be cleared when it is renderanced to fragment.',
+    'Correctness: Effects of nested component should be cleared when it is changed to fragment.',
 )
 console.log(
     [...function*(){
