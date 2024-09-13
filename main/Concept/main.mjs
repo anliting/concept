@@ -10,7 +10,7 @@ export default class{
             let
                 newProve=this.make(prove.root),
                 res=newProve.node,
-                a=c.getNode(prove),
+                a=prove.node,
                 parentNode=n.parentNode
             parentNode.insertBefore(sentinel,n)
             let f=new DocumentFragment

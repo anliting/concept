@@ -1,8 +1,5 @@
 import Concept from'../Concept/main.mjs'
 let NodeConcept=class extends Concept{
-    getNode(p){
-        return[p.node[0]]
-    }
     sub(c){
         if(!(c instanceof NodeConcept))
             return super.sub(c)

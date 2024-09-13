@@ -9,9 +9,6 @@ let ComponentConcept=class extends Concept{
         this.f=fun
         this.c=child
     }
-    getNode(p){
-        return p.functionConcept.getNode(p.child[0])
-    }
     make(root){
         let prove=new Prove(root)
         prove.functionConcept=withEffect(prove.effect,()=>

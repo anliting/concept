@@ -15,11 +15,6 @@ let FragmentConcept=class extends Concept{
             Symbol.iterator in a?new FragmentConcept({},a):a
         )
     }
-    getNode(p){
-        return[p.node[0],...this.c.flatMap((c,i)=>
-            c.getNode(p.child[i])
-        )]
-    }
     make(root){
         let child=this.c.map((a,i)=>
             a.make(root)
@@ -35,7 +30,7 @@ let FragmentConcept=class extends Concept{
             {
                 let n=m
                 for(let[i,d]of c.c.entries()){
-                    let res=d.getNode(prove.child[i])
+                    let res=prove.child[i].node
                     if('_key'in d.p)
                         keyNode[d.p._key]={i,node:res}
                     else
