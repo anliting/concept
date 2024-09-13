@@ -68,7 +68,7 @@ The concept can then be instantiate with the `Prove` class:
 
 ```
 let prove=new Prove
-prove.adv(form({},
+prove.render(form({},
     input({type:'text'}),
     input({type:'submit'}),
 ))
@@ -80,10 +80,10 @@ A Prove object would have a `node` property, for you to mount it to the document
 document.body.appendChild(prove.node)
 ```
 
-To change its background color from green to red, we create a similar concept with red background color, use the `adv` method of `prove` to "advance" it to the new concept:
+To change its background color from green to red, we create a similar concept with red background color, use the `render` method of `prove` to "render" it to the new concept:
 
 ```
-prove.adv(form({
+prove.render(form({
     $style:{backgroundColor:'red'}
 },
     input({type:'text'}),
@@ -96,7 +96,7 @@ We can assign the value of the text input to a variable on every time its value 
 ```
 let text
 let prove=new Prove
-prove.adv(form({},
+prove.render(form({},
     input({
         type:'text',
         $oninput:e=>{text=e.target.value}
