@@ -536,16 +536,6 @@ if(0){
     )
     document.body.appendChild(root.node)
 }
-if(0){
-    let a=0
-    let c=component(()=>{
-        a++
-        return $fragment({})
-    })
-    let root=new Root(c({a:1}))
-    root.render(c({a:1}))
-    console.log(a)
-}
 // effect should be run after sub-concept is rendered.
 if(0){
     let value=0
@@ -558,6 +548,7 @@ if(0){
     })())
     console.log(!!value)
 }
+// partial render should use the latest concept
 if(0){
     let outerSetState,outerPropA
     let cmpA=component(({propA})=>{
@@ -572,6 +563,7 @@ if(0){
     root.flush()
     console.log(!!outerPropA)
 }
+// input.value
 if(0){
     let root=new Root
     root.render(input({value:'a'}))
@@ -580,6 +572,7 @@ if(0){
     root.flush()
     console.log(root.node.firstChild.value=='c')
 }
+// input.checked
 if(0){
     let root=new Root
     root.render(input({type:'checkbox',checked:false}))
@@ -587,4 +580,28 @@ if(0){
     root.render(input({type:'checkbox',checked:true}))
     root.flush()
     console.log(root.node.firstChild.checked)
+}
+// externally controlled fragment
+if(0){
+    let root=new Root(component(()=>{
+        let ref=useRef()
+        useEffect(()=>{
+            let root=new Root(div({}))
+            ref.current.appendChild(root.node)
+            return()=>{root.unmount()}
+        },[])
+        return div({_ref:ref})
+    })({}))
+    console.log(root.node.firstChild.childNodes[1].tagName=='DIV')
+}
+// pure component
+if(1){
+    let a=0
+    let c=component(()=>{
+        a++
+        return $fragment({})
+    })
+    let root=new Root(c({a:1}))
+    root.render(c({a:1}))
+    console.log(a==1)
 }
