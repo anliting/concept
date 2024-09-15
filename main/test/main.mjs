@@ -1,6 +1,6 @@
 import{
     $fragment,$tn,Root,dom,
-    component,useEffect,useRef,useState
+    component,useEffect,useMemo,useRef,useState
 }from'concept'
 let{a,b,button,div,input}=dom
 console.log(
@@ -612,4 +612,22 @@ if(0){
     outerSetState()
     root.flush()
     console.log(!!outerPropA)
+}
+// useMemo
+if(1){
+    let oldA,a
+    let A=component(({m})=>{
+        a=useMemo(()=>[m+1],[m])
+        return $fragment({})
+    })
+    let root=new Root(A({m:0,t:0}))
+    root.flush()
+    console.log(a[0]==1)
+    oldA=a
+    root.render(A({m:0,t:1}))
+    root.flush()
+    console.log(oldA==a&&a[0]==1)
+    root.render(A({m:1,t:2}))
+    root.flush()
+    console.log(oldA!=a&&a[0]==2)
 }

@@ -8,6 +8,12 @@ let
             cbDepRef.current=[cb,dep]
         return cbDepRef.current[0]
     },
+    useMemo=(cb,dep)=>{
+        let ref=useRef(null)
+        if(!(ref.current&&arrayIs(ref.current[1],dep)))
+            ref.current=[cb(),dep]
+        return ref.current[0]
+    },
     useRef=v=>currentMemoryBlock in currentProve.ref?
         currentProve.ref[currentMemoryBlock++]
     :
@@ -37,4 +43,4 @@ let
             currentMemoryBlock=previousMemoryBlock
         }
     }
-export{useCallback,useEffect,useRef,useState,withMemory}
+export{useCallback,useEffect,useMemo,useRef,useState,withMemory}

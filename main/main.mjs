@@ -5,7 +5,9 @@ export{default as Concept}from              './Concept/main.mjs'
 export{Root}from                            './Root/main.mjs'
 export{component}from                       './component/main.mjs'
 export{useEffect}from                       './effect/main.mjs'
-export{useCallback,useRef,useState,}from    './memory/main.mjs'
+export{
+    useCallback,useMemo,useRef,useState,
+}from                                       './memory/main.mjs'
 export{dom}from                             './dom/main.mjs'
 export let
     $fragment=classFunction(FragmentConcept),
