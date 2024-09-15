@@ -258,6 +258,26 @@ console.log(
 )
 console.log(
     [...function*(){
+        let oldA,a
+        let A=component(({m})=>{
+            a=useMemo(()=>[m+1],[m])
+            return $fragment({})
+        })
+        let root=new Root(A({m:0,t:0}))
+        root.flush()
+        yield a[0]==1
+        oldA=a
+        root.render(A({m:0,t:1}))
+        root.flush()
+        yield oldA==a&&a[0]==1
+        root.render(A({m:1,t:2}))
+        root.flush()
+        yield oldA!=a&&a[0]==2
+    }()].every(a=>a),
+    'Feature: useMemo.',
+)
+console.log(
+    [...function*(){
         let root=new Root
         root.render(input({value:'a'}))
         root.node.firstChild.value='b'
@@ -612,22 +632,4 @@ if(0){
     outerSetState()
     root.flush()
     console.log(!!outerPropA)
-}
-// useMemo
-if(1){
-    let oldA,a
-    let A=component(({m})=>{
-        a=useMemo(()=>[m+1],[m])
-        return $fragment({})
-    })
-    let root=new Root(A({m:0,t:0}))
-    root.flush()
-    console.log(a[0]==1)
-    oldA=a
-    root.render(A({m:0,t:1}))
-    root.flush()
-    console.log(oldA==a&&a[0]==1)
-    root.render(A({m:1,t:2}))
-    root.flush()
-    console.log(oldA!=a&&a[0]==2)
 }
