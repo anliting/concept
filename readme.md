@@ -121,11 +121,11 @@ Non-string iterable items in fragment concepts are treated as fragment concepts.
 
 ## Hook
 
-### useCommit
-
 ### useCallback
 
 ### useEffect
+
+### useMemo
 
 ### useRef
 
