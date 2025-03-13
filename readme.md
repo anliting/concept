@@ -64,26 +64,26 @@ form({},
 )
 ```
 
-The concept can then be instantiate with the `Prove` class:
+The concept can then be instantiate with the `Root` class:
 
 ```
-let prove=new Prove
-prove.render(form({},
+let root=new Root
+root.render(form({},
     input({type:'text'}),
     input({type:'submit'}),
 ))
 ```
 
-A Prove object would have a `node` property, for you to mount it to the document tree:
+A Root object would have a `node` property, for you to mount it to the document tree:
 
 ```
-document.body.appendChild(prove.node)
+document.body.appendChild(root.node)
 ```
 
-To change its background color from green to red, we create a similar concept with red background color, use the `render` method of `prove` to "render" it to the new concept:
+To change its background color from green to red, we create a similar concept with red background color, use the `render` method of `root` to "render" it to the new concept:
 
 ```
-prove.render(form({
+root.render(form({
     $style:{backgroundColor:'red'}
 },
     input({type:'text'}),
@@ -95,8 +95,8 @@ We can assign the value of the text input to a variable on every time its value 
 
 ```
 let text
-let prove=new Prove
-prove.render(form({},
+let root=new Root
+root.render(form({},
     input({
         type:'text',
         $oninput:e=>{text=e.target.value}
