@@ -137,6 +137,14 @@ A fragment concept is represented as a text node of empty string and its childre
 
 In a fragment concept, because we seldom do substraction between a concept without key and a concept with key, the concepts with keys, and those without, are aligned independently.
 
+## Should root.render be synchronous or asynchronous?
+
+我覺得最重要的問題是「各個 render 的順序應該交給 Root 管理，還是 Root 的使用者？」。
+
+It rarely needs to be synchronous, so it should be asynchronous by default. If it needs, it is not hard to call root.flush. In the case that it is more appropriate to be synchronous by default, we can simply add a switch to flush after every call to root.render.
+
+Isn't synchronous simpler? It is not simpler than "the user needs not care about the synchronicity".
+
 # React
 
 Many concept in this library are learned from React. I am grateful for that.
