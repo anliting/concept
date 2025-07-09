@@ -2,7 +2,7 @@ services:
   build:
     build:
       dockerfile_inline: |
-        FROM alpine
+        FROM alpine:3.22.0
         RUN apk add --no-cache git nodejs npm
         WORKDIR /app
         RUN npm i rollup terser
