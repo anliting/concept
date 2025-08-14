@@ -26,6 +26,9 @@ let ElementConcept=class extends NodeConcept{
         ))
             return super.sub(c)
         return prove=>{
+            ;(new FragmentConcept({},this.c)).sub(
+                new FragmentConcept({},c.c)
+            )(prove.child[0])
             let n=prove.node[0]
             let specialProp=new Set([
                 '_key','_ref',
@@ -95,9 +98,6 @@ let ElementConcept=class extends NodeConcept{
                     n.setAttribute(k,this.p[k])
                 else
                     n.removeAttribute(k)
-            ;(new FragmentConcept({},this.c)).sub(
-                new FragmentConcept({},c.c)
-            )(prove.child[0])
             return prove
         }
     }

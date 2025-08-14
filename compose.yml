@@ -1,5 +1,5 @@
 services:
-  build:
+  make:
     build:
       dockerfile_inline: |
         FROM alpine:3.22.0

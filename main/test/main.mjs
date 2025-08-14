@@ -2,7 +2,7 @@ import{
     $fragment,$tn,Root,dom,
     component,useEffect,useMemo,useRef,useState
 }from'concept'
-let{a,b,button,div,input}=dom
+let{a,b,button,div,input,option,select}=dom
 console.log(
     [...function*(){
         let root=new Root
@@ -297,6 +297,16 @@ console.log(
         yield root.node.firstChild.checked
     }()].every(a=>a),
     'Feature: input.checked.',
+)
+console.log(
+    [...function*(){
+        let root=new Root(select({value:'b'},
+          option({value:'a'}),
+          option({value:'b'}),
+        ))
+        yield root.node.firstChild.value=='b'
+    }()].every(a=>a),
+    'Feature: select.value.',
 )
 0&&console.log(
     [...function*(){
