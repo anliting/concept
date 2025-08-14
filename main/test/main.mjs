@@ -451,7 +451,7 @@ console.log(
             },[])
             return div({_ref:ref})
         })({}))
-        return root.node.firstChild.childNodes[1].tagName=='DIV'
+        yield root.node.firstChild.childNodes[1].tagName=='DIV'
     }()].every(a=>a),
     'Prove: Externally controlled fragment.',
 )
