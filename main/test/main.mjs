@@ -308,6 +308,17 @@ console.log(
     }()].every(a=>a),
     'Feature: select.value.',
 )
+console.log(
+    [...function*(){
+        let root=new Root(div({
+          $style:{
+            '--a':'1',
+          },
+        }))
+        yield root.node.firstChild.style.getPropertyValue('--a')=='1'
+    }()].every(a=>a),
+    'Feature: $style[\'--a\'].',
+)
 0&&console.log(
     [...function*(){
         let
@@ -396,6 +407,20 @@ console.log(
         yield a==2
     }()].every(a=>a),
     'Correctness: Effects of nested component should be cleared when it is changed to fragment.',
+)
+console.log(
+    [...function*(){
+        let root=new Root(div({
+          style:'',
+        }))
+        root.render(div({
+          $style:{
+            '--a':'1',
+          },
+        }))
+        yield root.node.firstChild.style.getPropertyValue('--a')=='1'
+    }()].every(a=>a),
+    'Correctness: style:\'\' to $style:{\'--a\':\'1\'}.',
 )
 console.log(
     [...function*(){

@@ -50,6 +50,11 @@ let ElementConcept=class extends NodeConcept{
                         n.setAttribute('style',this.p.style)
                     if('$style'in this.p)
                         Object.assign(n.style,this.p.$style)
+                    for(let s of Object.keys(this.p.$style||{}))
+                        if(s.includes('-'))
+                            n.style.setProperty(s,this.p.$style[s])
+                        else
+                            n.style[s]=this.p.$style[s]
                 }else
                     for(let s of
                         new Set(Object.keys(this.p.$style||{}))
