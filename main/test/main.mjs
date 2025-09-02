@@ -668,3 +668,20 @@ if(0){
     root.flush()
     console.log(!!outerPropA)
 }
+/*
+  Call setter function in setter invoked effect change. If you clear the queue
+  after comsuming the "snapshot" of the queue, you fall into this trap, because
+  the queue might grow during comsuming.
+*/
+if(0){
+  await new Promise(rs=>setTimeout(rs,1e3))
+  let root=new Root(component(()=>{
+    let[a,setA]=useState(0)
+    useEffect(()=>{
+      console.log(a)
+      if(a<10)
+        setA(a+1)
+    },[a])
+    return $fragment({})
+  })({}))
+}
