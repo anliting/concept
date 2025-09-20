@@ -8,8 +8,8 @@ We want to create a form like this:
 
 ```
 <form>
-    <input type=text>
-    <input type=submit>
+  <input type=text>
+  <input type=submit>
 </form>
 ```
 
@@ -29,13 +29,13 @@ let form=document.createElement('form')
 let textInput=document.createElement('input')
 textInput.type='text'
 textInput.oninput=()=>{
-    if(/^\d*$/.test(textInput.value)){
-        form.style.backgroundColor='green'
-        submitInput.disabled=false
-    }else{
-        form.style.backgroundColor='red'
-        submitInput.disabled=true
-    }
+  if(/^\d*$/.test(textInput.value)){
+    form.style.backgroundColor='green'
+    submitInput.disabled=false
+  }else{
+    form.style.backgroundColor='red'
+    submitInput.disabled=true
+  }
 }
 form.appendChild(textInput)
 let submitInput=document.createElement('input')
@@ -59,8 +59,8 @@ With Concept, we create a concept with concept functions, like:
 
 ```
 form({},
-    input({type:'text'}),
-    input({type:'submit'}),
+  input({type:'text'}),
+  input({type:'submit'}),
 )
 ```
 
@@ -69,8 +69,8 @@ The concept can then be instantiate with the `Root` class:
 ```
 let root=new Root
 root.render(form({},
-    input({type:'text'}),
-    input({type:'submit'}),
+  input({type:'text'}),
+  input({type:'submit'}),
 ))
 ```
 
@@ -84,10 +84,10 @@ To change its background color from green to red, we create a similar concept wi
 
 ```
 root.render(form({
-    $style:{backgroundColor:'red'}
+  style:{backgroundColor:'red'}
 },
-    input({type:'text'}),
-    input({type:'submit'}),
+  input({type:'text'}),
+  input({type:'submit'}),
 ))
 ```
 
@@ -97,11 +97,11 @@ We can assign the value of the text input to a variable on every time its value 
 let text
 let root=new Root
 root.render(form({},
-    input({
-        type:'text',
-        $oninput:e=>{text=e.target.value}
-    }),
-    input({type:'submit'}),
+  input({
+    type:'text',
+    oninput:e=>{text=e.target.value}
+  }),
+  input({type:'submit'}),
 ))
 ```
 
