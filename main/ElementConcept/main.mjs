@@ -13,8 +13,8 @@ let ElementConcept=class extends NodeConcept{
         a.appendChild(new Text)
         let prove=new Prove(root,[a],[new Prove(root,[a.firstChild])])
         prove=this.sub(new ElementConcept(this.t,{},[]))(prove)
-        if(this.p._ref)
-            this.p._ref.current=a
+        if(this.p.ref)
+            this.p.ref.current=a
         return prove
     }
     sub(c){
@@ -31,41 +31,41 @@ let ElementConcept=class extends NodeConcept{
             )(prove.child[0])
             let n=prove.node[0]
             let specialProp=new Set([
-                '_key','_ref',
-                'style','$style',
+                'key','ref',
+                'style','Style',
                 'checked',
                 'value',
             ])
-            if(c.p._ref)
-                delete c.p._ref.current
-            if(this.p._ref)
-                this.p._ref.current=n
+            if(c.p.ref)
+                delete c.p.ref.current
+            if(this.p.ref)
+                this.p.ref.current=n
             if(!arrayIs(
-                [c.p.style,c.p.$style],
-                [this.p.style,this.p.$style],
+                [c.p.style,c.p.Style],
+                [this.p.style,this.p.Style],
             ))
-                if('style'in c.p||'style'in this.p){
+                if('Style'in c.p||'Style'in this.p){
                     n.removeAttribute('style')
+                    if('Style'in this.p)
+                        n.setAttribute('style',this.p.Style)
                     if('style'in this.p)
-                        n.setAttribute('style',this.p.style)
-                    if('$style'in this.p)
-                        Object.assign(n.style,this.p.$style)
-                    for(let s of Object.keys(this.p.$style||{}))
+                        Object.assign(n.style,this.p.style)
+                    for(let s of Object.keys(this.p.style||{}))
                         if(s.includes('-'))
-                            n.style.setProperty(s,this.p.$style[s])
+                            n.style.setProperty(s,this.p.style[s])
                         else
-                            n.style[s]=this.p.$style[s]
+                            n.style[s]=this.p.style[s]
                 }else
                     for(let s of
-                        new Set(Object.keys(this.p.$style||{}))
-                        .union(new Set(Object.keys(c.p.$style||{})))
+                        new Set(Object.keys(this.p.style||{}))
+                        .union(new Set(Object.keys(c.p.style||{})))
                     )
-                        if(this.p.$style&&s in this.p.$style){
-                            if(c.p.$style?.[s]!=this.p.$style[s])
+                        if(this.p.style&&s in this.p.style){
+                            if(c.p.style?.[s]!=this.p.style[s])
                                 if(s.includes('-'))
-                                    n.style.setProperty(s,this.p.$style[s])
+                                    n.style.setProperty(s,this.p.style[s])
                                 else
-                                    n.style[s]=this.p.$style[s]
+                                    n.style[s]=this.p.style[s]
                         }else
                             n.style.removeProperty(s)
             if(!Object.is(c.p.checked,this.p.checked))
@@ -76,27 +76,27 @@ let ElementConcept=class extends NodeConcept{
                 .union(new Set(Object.keys(c.p)))
                 .difference(specialProp)
             for(let e of[...s].map(
-                a=>a.match(/^\$?on(.*)/)
+                a=>a.match(/^[Oo]n(.*)/)
             ).filter(a=>a).map(a=>a[1])){
                 if(!arrayIs(
                     [
                         c.p['on'+e],
-                        c.p['$on'+e]
+                        c.p['On'+e]
                     ],
                     [
                         this.p['on'+e],
-                        this.p['$on'+e]
+                        this.p['On'+e]
                     ],
                 )){
                     n.removeAttribute('on'+e)
                     n['on'+e]=null
                     if('on'+e in this.p)
-                        n.setAttribute('on'+e,this.p['on'+e])
-                    if('$on'+e in this.p)
-                        n['on'+e]=this.p['$on'+e]
+                        n['on'+e]=this.p['on'+e]
+                    if('On'+e in this.p)
+                        n.setAttribute('on'+e,this.p['On'+e])
                 }
                 s.delete('on'+e)
-                s.delete('$on'+e)
+                s.delete('On'+e)
             }
             for(let k of s)
                 if(k in this.p)

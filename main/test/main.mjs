@@ -66,24 +66,24 @@ console.log(
         let root=new Root(div())
         yield root.node.childNodes[0].tagName=='DIV'
         root.render(div({
-            style:'width:100px',
+            Style:'width:100px',
         }))
         yield root.node.childNodes[0].style.width=='100px'
     }()].every(a=>a),
-    'Set style of a DIV element.',
+    'Set Style of a DIV element.',
 )
 console.log(
     [...function*(){
         let root=new Root(div())
         yield root.node.childNodes[0].tagName=='DIV'
         root.render(div({
-            $style:{
+            style:{
                 width:'200px',
             }
         }))
         yield root.node.childNodes[0].style.width=='200px'
     }()].every(a=>a),
-    'Set $style of a DIV element.',
+    'Set style of a DIV element.',
 )
 console.log(
     [...function*(){
@@ -135,15 +135,15 @@ console.log(
     [...function*(){
         let
             root=new Root(div({},
-                div({_key:0}),
-                button({_key:1}),
+                div({key:0}),
+                button({key:1}),
             )),
             oldDiv=root.node.childNodes[1],
             oldButton=root.node.childNodes[2]
         root.render(div(
             {},
-            button({_key:1}),
-            div({_key:0}),
+            button({key:1}),
+            div({key:0}),
         ))
         yield root.node.childNodes[1]==oldButton&&
             root.node.childNodes[2]==oldDiv
@@ -154,19 +154,19 @@ console.log(
     [...function*(){
         let
             root=new Root(div({},
-                div({_key:0}),
-                div({_key:1}),
-                div({_key:2}),
+                div({key:0}),
+                div({key:1}),
+                div({key:2}),
             )),
             div1=root.node.firstChild.childNodes[2],
             div2=root.node.firstChild.childNodes[3]
         root.render(div({},
-            div({_key:1}),
-            div({_key:2}),
+            div({key:1}),
+            div({key:2}),
         ))
         yield root.node.firstChild.childNodes[1]==div1&&root.node.firstChild.childNodes[2]==div2
         root.render(div({},
-            div({_key:2}),
+            div({key:2}),
         ))
     }()].every(a=>a),
     'Remove the first node of a fragment.',
@@ -174,9 +174,9 @@ console.log(
 console.log(
     [...function*(){
         let root=new Root($fragment({},
-            a({_key:0}),
-            a({_key:1}),
-            a({_key:2}),
+            a({key:0}),
+            a({key:1}),
+            a({key:2}),
         ))
         yield root.node.childNodes.length==4&&
             root.node.childNodes[1].tagName=='A'&&
@@ -202,17 +202,17 @@ console.log(
         let
             root=new Root(div({},
                 [
-                    div({_key:0}),
-                    div({_key:1}),
-                    div({_key:2}),
+                    div({key:0}),
+                    div({key:1}),
+                    div({key:2}),
                 ],
             )),
             div1=root.node.firstChild.childNodes[3],
             div2=root.node.firstChild.childNodes[4]
         root.render(div({},
             [
-                div({_key:1}),
-                div({_key:2}),
+                div({key:1}),
+                div({key:2}),
             ],
         ))
         yield root.node.firstChild.childNodes[2]==div1&&
@@ -311,13 +311,13 @@ console.log(
 console.log(
     [...function*(){
         let root=new Root(div({
-          $style:{
+          style:{
             '--a':'1',
           },
         }))
         yield root.node.firstChild.style.getPropertyValue('--a')=='1'
     }()].every(a=>a),
-    'Feature: $style[\'--a\'].',
+    'Feature: style[\'--a\'].',
 )
 0&&console.log(
     [...function*(){
@@ -411,27 +411,27 @@ console.log(
 console.log(
     [...function*(){
         let root=new Root(div({
-          style:'',
+          Style:'',
         }))
         root.render(div({
-          $style:{
+          style:{
             '--a':'1',
           },
         }))
         yield root.node.firstChild.style.getPropertyValue('--a')=='1'
     }()].every(a=>a),
-    'Correctness: style:\'\' to $style:{\'--a\':\'1\'}.',
+    'Correctness: Style:\'\' to style:{\'--a\':\'1\'}.',
 )
 console.log(
     [...function*(){
         let
             root=new Root($fragment({},
-                a({_key:'a'}),
+                a({key:'a'}),
             ),)
         yield root.node.childNodes.length==2&&
             root.node.childNodes[1].tagName=='A'
         root.render($fragment({},
-            a({_key:'b'}),
+            a({key:'b'}),
         ))
         yield root.node.childNodes.length==2&&
             root.node.childNodes[1].tagName=='A'
@@ -484,7 +484,7 @@ console.log(
                 ref.current.appendChild(root.node)
                 return()=>{root.unmount()}
             },[])
-            return div({_ref:ref})
+            return div({ref:ref})
         })({}))
         yield root.node.firstChild.childNodes[1].tagName=='DIV'
     }()].every(a=>a),
@@ -495,14 +495,14 @@ if(0){
     let a=[...Array(n)].map(()=>0)
     let root=new Root(
         component(()=>div({
-                $style:{
+                style:{
                     display:'flex',
                     flexWrap:'wrap',
                     gap:'1px',
                 },
             },
             a.map(a=>
-                div({$style:{
+                div({style:{
                     width:'10px',
                     height:'10px',
                     backgroundColor:a?'#8080ff':'#808080',
@@ -529,14 +529,14 @@ if(0){
     let n=1000
     let a=[...Array(n)].map(()=>0)
     let blockRoot=a.map((_,i)=>
-        new Root(component(()=>div({$style:{
+        new Root(component(()=>div({style:{
             width:'10px',
             height:'10px',
             backgroundColor:a[i]?'#8080ff':'#808080',
         }}))({}))
     )
     let root=new Root(component(()=>div({
-        $style:{
+        style:{
             display:'flex',
             flexWrap:'wrap',
             gap:'1px',
@@ -572,7 +572,7 @@ if(0){
         component(()=>{
             let[counter,setCounter]=useState(0)
             return button({
-                $onclick(){
+                onclick(){
                     setCounter(counter+1)
                 },
             },''+counter)
@@ -583,7 +583,7 @@ if(0){
 if(0){
     let{form,input}=dom
     let makeConcept=()=>form({
-        $style:{backgroundColor:'red'}
+        style:{backgroundColor:'red'}
     },
         input({type:'text'}),
         input({type:'submit'}),
@@ -595,10 +595,10 @@ if(0){
 if(0){
     let{button,input}=dom,inputRef={}
     let root=new Root(component(()=>$fragment({},
-        input({_ref:inputRef,type:'text'}),
+        input({ref:inputRef,type:'text'}),
         button({
             type:'submit',
-            $onclick:()=>{
+            onclick:()=>{
                 inputRef.current.focus()
             },
         }),
@@ -612,10 +612,10 @@ if(0){
         let[counter,setCounter]=useState(0)
         let inputRef=useRef()
         return $fragment({},
-            input({_ref:inputRef,type:'text'}),
+            input({ref:inputRef,type:'text'}),
             button({
                 type:'submit',
-                $onclick:()=>{
+                onclick:()=>{
                     setCounter(counter+1)
                     inputRef.current.focus()
                 },
@@ -633,7 +633,7 @@ if(0){
                 console.log(counter)
             },[counter])
             return button({
-                $onclick(){
+                onclick(){
                     setCounter(counter+1)
                 },
             },''+counter)
@@ -649,7 +649,7 @@ if(0){
         useEffect(()=>{
             value=aRef.current
         })
-        return a({_ref:aRef})
+        return a({ref:aRef})
     })())
     console.log(!!value)
 }
