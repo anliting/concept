@@ -32,14 +32,19 @@ let ElementConcept=class extends NodeConcept{
             let n=prove.node[0]
             let specialProp=new Set([
                 'key','ref',
-                'style','Style',
                 'checked',
+                'innerHTML',
+                'style','Style',
                 'value',
             ])
             if(c.p.ref)
                 delete c.p.ref.current
             if(this.p.ref)
                 this.p.ref.current=n
+            if(!Object.is(c.p.checked,this.p.checked))
+                n.checked=this.p.checked
+            if(!Object.is(c.p.innerHTML,this.p.innerHTML))
+                n.innerHTML=this.p.innerHTML
             if(!arrayIs(
                 [c.p.style,c.p.Style],
                 [this.p.style,this.p.Style],
@@ -68,8 +73,6 @@ let ElementConcept=class extends NodeConcept{
                                     n.style[s]=this.p.style[s]
                         }else
                             n.style.removeProperty(s)
-            if(!Object.is(c.p.checked,this.p.checked))
-                n.checked=this.p.checked
             if(!Object.is(c.p.value,this.p.value))
                 n.value='value'in this.p?this.p.value:''
             let s=new Set(Object.keys(this.p))
