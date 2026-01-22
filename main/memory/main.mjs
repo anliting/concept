@@ -43,4 +43,4 @@ let
             currentMemoryBlock=previousMemoryBlock
         }
     }
-export{useCallback,useEffect,useMemo,useRef,useState,withMemory}
+export{useCallback,useMemo,useRef,useState,withMemory}

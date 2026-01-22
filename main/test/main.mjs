@@ -490,6 +490,23 @@ console.log(
     }()].every(a=>a),
     'Prove: Externally controlled fragment.',
 )
+console.log(
+  [...function*(){
+    let a=0,b=0
+    let root=new Root(component(()=>{
+      useEffect(function*(){
+        a=1
+        yield
+        b=1
+      },[])
+      return $fragment({})
+    })({}))
+    yield a==1&&b==0
+    root.render($fragment({}))
+    yield a==1&&b==1
+  }()].every(a=>a),
+  'Generator effect works.',
+)
 if(0){
     let n=1000
     let a=[...Array(n)].map(()=>0)

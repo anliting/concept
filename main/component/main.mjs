@@ -3,6 +3,7 @@ import Prove from                       '../Prove/main.mjs'
 import{arrayIs,objectContentIs}from     '../base/main.mjs'
 import{withEffect}from                  '../effect/main.mjs'
 import{withMemory}from                  '../memory/main.mjs'
+let GeneratorFunction=function*(){}.constructor
 let ComponentConcept=class extends Concept{
     constructor(prop,fun,child){
         super(prop)
@@ -16,7 +17,14 @@ let ComponentConcept=class extends Concept{
         )
         prove.child=[prove.functionConcept.make(root)]
         prove.concept=this
-        prove.effect.map(e=>e[0]=e[0]())
+        prove.effect.map(e=>{
+          if(e[0] instanceof GeneratorFunction){
+            let a=e[0]()
+            a.next()
+            e[0]=a.next.bind(a)
+          }else
+            e[0]=e[0]()
+        })
         prove.node=prove.child[0].node
         return prove
     }
@@ -46,7 +54,12 @@ let ComponentConcept=class extends Concept{
             prove.child[0]=f(prove.child[0])
             prove.functionConcept=concept
             dif.map(i=>{
-                let e=effect[i]
+              let e=effect[i]
+              if(e[0] instanceof GeneratorFunction){
+                let a=e[0]()
+                a.next()
+                e[0]=a.next.bind(a)
+              }else
                 e[0]=e[0]()
             })
             prove.clean=1
