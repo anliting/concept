@@ -53,14 +53,16 @@ let ComponentConcept=class extends Concept{
             dif.map(i=>oldEff[i][0]?.())
             prove.child[0]=f(prove.child[0])
             prove.functionConcept=concept
-            dif.map(i=>{
-              let e=effect[i]
+            effect=effect.map((e,i)=>{
+              if(arrayIs(e[1],oldEff[i][1]))
+                return oldEff[i]
               if(e[0] instanceof GeneratorFunction){
                 let a=e[0]()
                 a.next()
                 e[0]=a.next.bind(a)
               }else
                 e[0]=e[0]()
+              return e
             })
             prove.clean=1
             prove.concept=this

@@ -494,6 +494,24 @@ console.log(
   [...function*(){
     let a=0,b=0
     let root=new Root(component(()=>{
+      useEffect(function(){
+        a=1
+        return()=>{
+          b=1
+        }
+      },[])
+      return $fragment({})
+    })({}))
+    yield a==1&&b==0
+    root.render($fragment({}))
+    yield a==1&&b==1
+  }()].every(a=>a),
+  'Non-generator function effect works.',
+)
+console.log(
+  [...function*(){
+    let a=0,b=0
+    let root=new Root(component(()=>{
       useEffect(function*(){
         a=1
         yield
@@ -505,8 +523,33 @@ console.log(
     root.render($fragment({}))
     yield a==1&&b==1
   }()].every(a=>a),
-  'Generator effect works.',
+  'Generator function effect works.',
 )
+if(0){
+  console.log(
+    [...function*(){
+      let a=0,b=0,setC,setD
+      let root=new Root(component(()=>{
+        let c
+        ;[c,setC]=useState(0)
+        let d
+        ;[d,setD]=useState(0)
+        useEffect(function(){
+          console.log('a')
+          a=1
+          return()=>{
+            console.log('b')
+            b=1
+          }
+        },[c])
+        return $fragment({})
+      })({}))
+      setD(0)
+      setC(1)
+    }()].every(a=>a),
+    '',
+  )
+}
 if(0){
     let n=1000
     let a=[...Array(n)].map(()=>0)
