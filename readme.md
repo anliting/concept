@@ -149,3 +149,7 @@ Isn't synchronous simpler? It is not simpler than "the user needs not care about
 
 Many concept in this library are learned from React. I am grateful for that.
 
+# To-Do
+
+Add generator function effect to documentation.
+
