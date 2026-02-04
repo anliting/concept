@@ -22,5 +22,7 @@ export default class{
             return newProve
         }
     }
-    undoEffect(){}
+    undoEffect(prove){
+      prove.ended=1
+    }
 }

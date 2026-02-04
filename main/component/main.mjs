@@ -39,6 +39,8 @@ let ComponentConcept=class extends Concept{
                 objectContentIs(c.p,this.p)&&
                 arrayIs(c.c,this.c)&&
                 prove.clean
+              ||
+                prove.ended
             )
                 return prove
             let oldCon=prove.functionConcept,oldEff=prove.effect,effect=[]
@@ -72,9 +74,12 @@ let ComponentConcept=class extends Concept{
         }
     }
     undoEffect(prove){
+        if(prove.ended)
+          return
         prove.effect.map(a=>a[0]?.())
         prove.effect=[]
         prove.functionConcept.undoEffect(prove.child[0])
+        super.undoEffect(prove)
     }
 }
 export let component=f=>(p,...a)=>new ComponentConcept(p,f,a)
