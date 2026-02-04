@@ -1,5 +1,7 @@
 "Concept" is a library handling declarative programming for fragment modifying in DOM.
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/anliting/concept)
+
 # Tutorial
 
 Let's explain this by first introducing a problem:
