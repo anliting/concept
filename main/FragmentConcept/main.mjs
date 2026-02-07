@@ -79,6 +79,7 @@ let FragmentConcept=class extends Concept{
                 }else{
                     newProve=d.make(prove.root)
                     insertArrayAfter(newProve.node,n)
+                    d.doEffect(newProve)
                 }
                 child.push(newProve)
                 n=newProve.node.at(-1)
