@@ -10,6 +10,19 @@ let ComponentConcept=class extends Concept{
         this.f=fun
         this.c=child
     }
+    doEffect(prove){
+      if(prove.ended)
+        return
+      prove.effect.map(e=>{
+        if(e[0] instanceof GeneratorFunction){
+          let a=e[0]()
+          a.next()
+          e[0]=a.next.bind(a)
+        }else
+          e[0]=e[0]()
+      })
+      prove.functionConcept.doEffect(prove.child[0])
+    }
     make(root){
         let prove=new Prove(root)
         prove.functionConcept=withEffect(prove.effect,()=>
@@ -17,14 +30,6 @@ let ComponentConcept=class extends Concept{
         )
         prove.child=[prove.functionConcept.make(root)]
         prove.concept=this
-        prove.effect.map(e=>{
-          if(e[0] instanceof GeneratorFunction){
-            let a=e[0]()
-            a.next()
-            e[0]=a.next.bind(a)
-          }else
-            e[0]=e[0]()
-        })
         prove.node=prove.child[0].node
         return prove
     }

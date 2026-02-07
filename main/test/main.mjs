@@ -525,6 +525,24 @@ console.log(
   }()].every(a=>a),
   'Generator function effect works.',
 )
+console.log(
+  [...function*(){
+    let root=new Root($tn({},''))
+    let divNode=document.createElement('div')
+    divNode.appendChild(root.node)
+    let a
+    root.render(component(()=>{
+      let ref=useRef()
+      useEffect(()=>{
+        a=ref.current.parentNode
+      },[])
+      return div({ref},'')
+    })({}))
+    root.flush()
+    yield a==divNode
+  }()].every(a=>a),
+  'Effect is run after mount.',
+)
 if(0){
   console.log(
     [...function*(){

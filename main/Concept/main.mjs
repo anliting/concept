@@ -3,6 +3,8 @@ export default class{
     constructor(prop){
         this.p=prop
     }
+    doEffect(){
+    }
     sub(c){
         return prove=>{
             let n=prove.node[0]
@@ -19,6 +21,7 @@ export default class{
             parentNode.removeChild(sentinel)
             for(let o of new Set(a).difference(new Set(res)))
                 parentNode.removeChild(o)
+            this.doEffect(newProve)
             return newProve
         }
     }

@@ -15,6 +15,10 @@ let FragmentConcept=class extends Concept{
             Symbol.iterator in a?new FragmentConcept({},a):a
         )
     }
+    doEffect(prove){
+      for(let i=0;i<this.c.length;i++)
+        this.c[i].doEffect(prove.child[i])
+    }
     make(root){
         let child=this.c.map((a,i)=>
             a.make(root)
