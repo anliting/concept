@@ -538,10 +538,22 @@ console.log(
       },[])
       return div({ref},'')
     })({}))
-    root.flush()
     yield a==divNode
   }()].every(a=>a),
   'Effect is run after mount.',
+)
+console.log(
+  [...function*(){
+    let a
+    let root=new Root(component(()=>{
+      useEffect(()=>{
+        a=1
+      },[])
+      return $tn({},'')
+    })({}))
+    yield a==1
+  }()].every(a=>a),
+  'Root effect is run.',
 )
 if(0){
   console.log(
