@@ -8,15 +8,13 @@ let TextConcept=class extends NodeConcept{
   _make(root){
     return new Proof(root,[new Text(this._text)])
   }
-  _sub(c){
+  _sub(c,p){
     if(!(c instanceof TextConcept))
-      return super._sub(c)
+      return super._sub(c,p)
     if(this._text==c._text)
-      return proof=>proof
-    return proof=>{
-      proof._node[0].nodeValue=this._text
-      return proof
-    }
+      return p
+    p._node[0].nodeValue=this._text
+    return p
   }
 }
 export default TextConcept

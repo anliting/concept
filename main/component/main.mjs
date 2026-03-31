@@ -35,49 +35,47 @@ let ComponentConcept=class extends Concept{
     proof._node=proof._child[0]._node
     return proof
   }
-  _sub(c){
+  _sub(c,proof){
     if(!(
       c instanceof ComponentConcept&&
       this._function==c._function
     ))
-      return super._sub(c)
-    return proof=>{
-      if(
-          objectContentIs(c._prop,this._prop)&&
-          arrayIs(c._child,this._child)&&
-          proof._clean
-        ||
-          proof._ended
-      )
-        return proof
-      let oldCon=proof._functionConcept,oldEff=proof._effect,effect=[]
-      let concept=toConcept(withEffect(effect,()=>
-        withMemory(proof,()=>this._function(this._prop,...this._child))
-      ))
-      let dif=oldEff.map((e,i)=>i).filter(i=>{
-        let e=oldEff[i]
-        return !(e[1]&&arrayIs(e[1],effect[i][1]))
-      })
-      dif.map(i=>oldEff[i][0]?.())
-      proof._child[0]=proof._root._changeProof(oldCon,proof._child[0],concept)
-      proof._functionConcept=concept
-      effect=effect.map((e,i)=>{
-        if(arrayIs(e[1],oldEff[i][1]))
-          return oldEff[i]
-        if(e[0] instanceof GeneratorFunction){
-          let a=e[0]()
-          a.next()
-          e[0]=a.next.bind(a)
-        }else
-          e[0]=e[0]()
-        return e
-      })
-      proof._clean=1
-      proof._concept=this
-      proof._effect=effect
-      proof._node=proof._child[0]._node
+      return super._sub(c,proof)
+    if(
+        objectContentIs(c._prop,this._prop)&&
+        arrayIs(c._child,this._child)&&
+        proof._clean
+      ||
+        proof._ended
+    )
       return proof
-    }
+    let oldCon=proof._functionConcept,oldEff=proof._effect,effect=[]
+    let concept=toConcept(withEffect(effect,()=>
+      withMemory(proof,()=>this._function(this._prop,...this._child))
+    ))
+    let dif=oldEff.map((e,i)=>i).filter(i=>{
+      let e=oldEff[i]
+      return !(e[1]&&arrayIs(e[1],effect[i][1]))
+    })
+    dif.map(i=>oldEff[i][0]?.())
+    proof._child[0]=proof._root._changeProof(oldCon,proof._child[0],concept)
+    proof._functionConcept=concept
+    effect=effect.map((e,i)=>{
+      if(arrayIs(e[1],oldEff[i][1]))
+        return oldEff[i]
+      if(e[0] instanceof GeneratorFunction){
+        let a=e[0]()
+        a.next()
+        e[0]=a.next.bind(a)
+      }else
+        e[0]=e[0]()
+      return e
+    })
+    proof._clean=1
+    proof._concept=this
+    proof._effect=effect
+    proof._node=proof._child[0]._node
+    return proof
   }
   _undoEffect(proof){
     if(proof._ended)

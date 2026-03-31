@@ -8,7 +8,7 @@ export let Root=class{
   #proof
   #queue=new Queue
   _changeProof(oldConcept,oldConceptProof,newConcept){
-    return newConcept._sub(oldConcept)(oldConceptProof)
+    return newConcept._sub(oldConcept,oldConceptProof)
   }
   _push(f){
     this.#queue.push(f)

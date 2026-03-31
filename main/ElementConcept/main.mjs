@@ -106,22 +106,20 @@ let ElementConcept=class extends NodeConcept{
       this._prop._ref.current=a
     return proof
   }
-  _sub(c){
+  _sub(c,p){
     if(c==this)
-      return p=>p
+      return p
     if(!(
       c instanceof ElementConcept&&
       this._tagName==c._tagName
     ))
-      return super._sub(c)
-    return proof=>{
-      proof._root._changeProof(
-        new FragmentConcept({},c._child),
-        proof._child[0],
-        new FragmentConcept({},this._child)
-      )
-      return propertySub(this._prop,c._prop)(proof)
-    }
+      return super._sub(c,p)
+    p._root._changeProof(
+      new FragmentConcept({},c._child),
+      p._child[0],
+      new FragmentConcept({},this._child)
+    )
+    return propertySub(this._prop,c._prop)(p)
   }
   _undoEffect(proof){
     if(proof._ended)
