@@ -6,10 +6,10 @@ import{withMemory}from                  '../memory/main.mjs'
 import toConcept from                   '../toConcept/main.mjs'
 let GeneratorFunction=function*(){}.constructor
 let ComponentProof=class extends Proof{
-  _concept=null
   _childConcept=null
-  constructor(root){
+  constructor(root,concept){
     super(root)
+    this._concept=concept
   }
 }
 let ComponentConcept=class extends Concept{
@@ -33,12 +33,11 @@ let ComponentConcept=class extends Concept{
     proof._childConcept._doEffect(proof._child[0])
   }
   _make(root){
-    let proof=new ComponentProof(root)
+    let proof=new ComponentProof(root,this)
     proof._childConcept=toConcept(withEffect(proof._effect,()=>
       withMemory(proof,()=>this._function(this._prop,...this._child))
     ))
     proof._child=[proof._childConcept._make(root)]
-    proof._concept=this
     proof._node=proof._child[0]._node
     return proof
   }
