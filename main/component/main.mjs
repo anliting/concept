@@ -7,6 +7,7 @@ import toConcept from                   '../toConcept/main.mjs'
 let GeneratorFunction=function*(){}.constructor
 let ComponentProof=class extends Proof{
   _childConcept=null
+  _clean=1
   constructor(root,concept){
     super(root)
     this._concept=concept

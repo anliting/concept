@@ -1,7 +1,6 @@
 export default class{
   constructor(root,node,child=[]){
     this._child=child
-    this._clean=1
     this._effect=[]
     this._ended=0
     this._node=node
