@@ -11,6 +11,8 @@ let ComponentProof=class extends Proof{
   constructor(root,concept){
     super(root)
     this._concept=concept
+    this._effect=[]
+    this._ref={}
   }
 }
 let ComponentConcept=class extends Concept{
