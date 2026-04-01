@@ -5,6 +5,13 @@ import{withEffect}from                  '../effect/main.mjs'
 import{withMemory}from                  '../memory/main.mjs'
 import toConcept from                   '../toConcept/main.mjs'
 let GeneratorFunction=function*(){}.constructor
+let ComponentProof=class extends Proof{
+  _concept=null
+  _childConcept=null
+  constructor(root){
+    super(root)
+  }
+}
 let ComponentConcept=class extends Concept{
   constructor(prop,fun,child){
     super(prop)
@@ -23,14 +30,14 @@ let ComponentConcept=class extends Concept{
       }else
         e[0]=e[0]()
     })
-    proof._functionConcept._doEffect(proof._child[0])
+    proof._childConcept._doEffect(proof._child[0])
   }
   _make(root){
-    let proof=new Proof(root)
-    proof._functionConcept=toConcept(withEffect(proof._effect,()=>
+    let proof=new ComponentProof(root)
+    proof._childConcept=toConcept(withEffect(proof._effect,()=>
       withMemory(proof,()=>this._function(this._prop,...this._child))
     ))
-    proof._child=[proof._functionConcept._make(root)]
+    proof._child=[proof._childConcept._make(root)]
     proof._concept=this
     proof._node=proof._child[0]._node
     return proof
@@ -49,7 +56,7 @@ let ComponentConcept=class extends Concept{
         proof._ended
     )
       return proof
-    let oldCon=proof._functionConcept,oldEff=proof._effect,effect=[]
+    let oldCon=proof._childConcept,oldEff=proof._effect,effect=[]
     let concept=toConcept(withEffect(effect,()=>
       withMemory(proof,()=>this._function(this._prop,...this._child))
     ))
@@ -59,7 +66,7 @@ let ComponentConcept=class extends Concept{
     })
     dif.map(i=>oldEff[i][0]?.())
     proof._child[0]=proof._root._changeProof(oldCon,proof._child[0],concept)
-    proof._functionConcept=concept
+    proof._childConcept=concept
     effect=effect.map((e,i)=>{
       if(arrayIs(e[1],oldEff[i][1]))
         return oldEff[i]
@@ -82,7 +89,7 @@ let ComponentConcept=class extends Concept{
       return
     proof._effect.map(a=>a[0]?.())
     proof._effect=[]
-    proof._functionConcept._undoEffect(proof._child[0])
+    proof._childConcept._undoEffect(proof._child[0])
     super._undoEffect(proof)
   }
 }
