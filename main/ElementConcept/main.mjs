@@ -114,10 +114,9 @@ let ElementConcept=class extends NodeConcept{
       this._tagName==c._tagName
     ))
       return super._sub(c,p)
-    p._root._changeProof(
+    new FragmentConcept({},this._child)._sub(
       new FragmentConcept({},c._child),
       p._child[0],
-      new FragmentConcept({},this._child)
     )
     return propertySub(this._prop,c._prop)(p)
   }

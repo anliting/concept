@@ -25,7 +25,7 @@ let
         m._root._push(()=>{
           a[0]=typeof v=='function'?v(a[0]):v
           m._clean=0
-          m._root._changeProof(m._concept,m,m._concept)
+          m._concept._sub(m._concept,m)
         })
       }]
     return useRef(a).current

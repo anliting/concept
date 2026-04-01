@@ -67,7 +67,7 @@ let ComponentConcept=class extends Concept{
       return !(e[1]&&arrayIs(e[1],effect[i][1]))
     })
     dif.map(i=>oldEff[i][0]?.())
-    proof._child[0]=proof._root._changeProof(oldCon,proof._child[0],concept)
+    proof._child[0]=concept._sub(oldCon,proof._child[0])
     proof._childConcept=concept
     effect=effect.map((e,i)=>{
       if(arrayIs(e[1],oldEff[i][1]))

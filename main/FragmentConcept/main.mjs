@@ -74,9 +74,7 @@ let FragmentConcept=class extends Concept{
       if(mount[i]){
         if(n.nextSibling!=mount[i]._node[0])
           insertArrayAfter(mount[i]._node,n)
-        newProof=proof._root._changeProof(
-          c._child[mount[i].i],proof._child[mount[i].i],d
-        )
+        newProof=d._sub(c._child[mount[i].i],proof._child[mount[i].i])
       }else{
         newProof=d._make(proof._root)
         insertArrayAfter(newProof._node,n)

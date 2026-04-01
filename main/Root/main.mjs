@@ -7,9 +7,6 @@ export let Root=class{
   #concept
   #proof
   #queue=new Queue
-  _changeProof(oldConcept,oldConceptProof,newConcept){
-    return newConcept._sub(oldConcept,oldConceptProof)
-  }
   _push(f){
     this.#queue.push(f)
     this.#afr=this.#afr||requestAnimationFrame(()=>{
@@ -30,7 +27,7 @@ export let Root=class{
   node=new DocumentFragment
   render(newConcept=this.#concept){
     newConcept=toConcept(newConcept)
-    this.#proof=this._changeProof(this.#concept,this.#proof,newConcept)
+    this.#proof=newConcept._sub(this.#concept,this.#proof)
     this.#concept=newConcept
   }
   unmount(){
